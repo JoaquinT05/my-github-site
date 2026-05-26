@@ -7,3 +7,4 @@ Trying to learn the fundementals of coding.
 ## What I Want to Build
 A sufficient portfolio
 ## Additional question
+## Collaborators
