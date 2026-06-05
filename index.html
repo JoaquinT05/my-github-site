@@ -1,32 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joaquin's Website</title>
     <style>
-      body { font-family: Arial, sans-serif; max-width: 800px;
-             margin: 0 auto; padding: 20px; background: #f5f5f5; }
-      h1   { color: #1F4E79; }
-      h2   { color: #2E75B6; border-bottom: 2px solid #2E75B6; }
-      p    { line-height: 1.6; }
+        /* --- CSS VARIABLES FOR CUSTOM COLOR THEME --- */
+        :root {
+            --primary-color: #1F4E79;
+            --secondary-color: #2E75B6;
+            --accent-color: #ff7b00;
+            --text-color: #333333;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: #ffffff;
+            --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- STYLED NAVIGATION BAR --- */
+        header {
+            background-color: var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .nav-logo {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color var(--transition-speed);
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        /* --- MAIN CONTENT & CARD LAYOUT --- */
+        main {
+            max-width: 900px;
+            width: 100%;
+            margin: 40px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        /* --- CARD-STYLE SECTIONS WITH BORDERS --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--card-shadow);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        /* --- HOVER EFFECTS ON HEADINGS --- */
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            display: inline-block;
+            position: relative;
+            cursor: pointer;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--accent-color);
+            transform-origin: bottom right;
+            transition: transform var(--transition-speed) ease-out;
+        }
+
+        h2:hover {
+            color: var(--primary-color);
+        }
+
+        h2:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        /* --- UTILITY STYLES --- */
+        a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* --- STYLED FOOTER --- */
+        footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
     </style>
-  </head>
-  <body>
-    <h1>Hi, I'm Joaquin!</h1>
- 
-    <h2>About Me</h2>
-    <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
- 
-    <h2>My Interests</h2>
-    <p>Music, Tennis, Drawing, Video Games</p>
- 
-    <h2>My Goals for This Course</h2>
-    <p>Build a sufficient portfolio</p>
- 
-    <h2>My GitHub</h2>
-    <p>Check out my projects: 
-      <a href="https://github.com/JoaquinT05">JoaquinT05</a>
-    </p>
-  </body>
+</head>
+<body>
+
+    <!-- STYLED NAVIGATION BAR -->
+    <header>
+        <nav class="nav-container">
+            <a href="#" class="nav-logo">Joaquin's Space</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#interests">Interests</a></li>
+                <li><a href="#goals">Goals</a></li>
+                <li><a href="#github">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <h1>Hi, I'm Joaquin!</h1>
+
+        <!-- CARD SECTIONS -->
+        <section id="about" class="card">
+            <h2>About Me</h2>
+            <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
+        </section>
+
+        <section id="interests" class="card">
+            <h2>My Interests</h2>
+            <p>Music, Tennis, Drawing, Video Games</p>
+        </section>
+
+        <section id="goals" class="card">
+            <h2>My Goals for This Course</h2>
+            <p>Build a sufficient portfolio</p>
+        </section>
+
+        <section id="github" class="card">
+            <h2>My GitHub</h2>
+            <p>Check out my projects: <a href="https://github.com/JoaquinT05" target="_blank">JoaquinT05</a></p>
+        </section>
+    </main>
+
+    <!-- STYLED FOOTER -->
+    <footer>
+        <p>&copy; 2026 Joaquin | Built for APCSP</p>
+    </footer>
+
+</body>
 </html>
