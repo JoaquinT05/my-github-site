@@ -19,15 +19,15 @@
     }
 
     :root[data-theme="light"] {
-      --bg-gradient: linear-gradient(135deg, #f3ecf9 0%, #e2d1f7 100%);
+      --bg-gradient: linear-gradient(135deg, #f7f4fc 0%, #e2d6f5 100%);
       --card-bg: #ffffff;
-      --card-border: #d4bbf2;
-      --text-main: #180630;
-      --text-muted: #53416b;
+      --card-border: #d2bdf2;
+      --text-main: #1c0836;
+      --text-muted: #5c467a;
       --accent-purple: #7b2cbf;
       --accent-hover: #9d4edd;
-      --nav-bg: rgba(243, 236, 249, 0.95);
-      --track-bg: #e2d1f7;
+      --nav-bg: rgba(247, 244, 252, 0.95);
+      --track-bg: #eddffa;
     }
 
     /* --- BASE STYLES & SMOOTH SCROLL --- */
@@ -40,7 +40,7 @@
       max-width: 900px;
       margin: 0 auto;
       padding: 100px 20px 40px 20px;
-      background: var(--bg-gradient);
+      background: var(--bg-gradient); /* Fixed to variable to change automatically */
       background-attachment: fixed;
       color: var(--text-main);
       transition: background 0.3s ease, color 0.3s ease;
@@ -355,4 +355,3 @@
     <h2>APCSP 2027 Examination Countdown</h2>
     <p>Time remaining until the May 2027 AP Computer Science Principles Exam administration:</p>
     <div class="countdown-display">
-      <div class="time-box"><span class="time-num" id="days">00</span><span class="time-label">Days</span></div>
