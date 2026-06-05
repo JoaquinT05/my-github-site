@@ -1,32 +1,344 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joaquin's Website</title>
     <style>
-      body { font-family: Arial, sans-serif; max-width: 800px;
-             margin: 0 auto; padding: 20px; background: #f5f5f5; }
-      h1   { color: #1F4E79; }
-      h2   { color: #2E75B6; border-bottom: 2px solid #2E75B6; }
-      p    { line-height: 1.6; }
+        /* Black and purple theme with CSS variables */
+        :root {
+            --bg-color: #0b0713;
+            --card-bg: #140e24;
+            --text-color: #f1ecfb;
+            --text-muted: #bda8df;
+            --primary-purple: #9d4edd;
+            --accent-purple: #c77dff;
+            --border-color: #3c2463;
+            --gradient-bg: linear-gradient(135deg, #0b0713 0%, #1a0f30 100%);
+        }
+
+        /* Light mode variables */
+        [data-theme="light"] {
+            --bg-color: #f5f0fa;
+            --card-bg: #ffffff;
+            --text-color: #1a0f30;
+            --text-muted: #5a4575;
+            --primary-purple: #7b2cbf;
+            --accent-purple: #9d4edd;
+            --border-color: #e0d4f0;
+            --gradient-bg: linear-gradient(135deg, #f5f0fa 0%, #e8daf8 100%);
+        }
+
+        /* Smooth scroll navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--gradient-bg);
+            color: var(--text-color);
+            min-height: 100vh;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Styled navigation bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 14, 36, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            box-sizing: border-box;
+            transition: background 0.3s, border-color 0.3s;
+        }
+        [data-theme="light"] .navbar {
+            background: rgba(255, 255, 255, 0.85);
+        }
+
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-purple);
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-purple);
+        }
+
+        /* Light/Dark mode toggle button */
+        .theme-toggle {
+            background: var(--primary-purple);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--accent-purple);
+        }
+
+        /* Main Content Layout */
+        .container {
+            max-width: 800px;
+            margin: 100px auto 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Animated welcome message */
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: var(--primary-purple);
+            margin-bottom: 10px;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 1s forwards;
+        }
+
+        @keyframes fadeInDown {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card-style sections with borders */
+        .card {
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            scroll-margin-top: 90px; /* Offset for fixed navbar */
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.15);
+        }
+
+        /* Hover effects on headings */
+        h2 {
+            color: var(--primary-purple);
+            display: inline-block;
+            margin-top: 0;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        h2:hover {
+            color: var(--accent-purple);
+            cursor: pointer;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent-purple);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        h2:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        p {
+            color: var(--text-muted);
+        }
+
+        a {
+            color: var(--accent-purple);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Countdown timer setup */
+        .timer-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .timer-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 10px 15px;
+            border-radius: 8px;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .timer-num {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-purple);
+        }
+
+        .timer-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Skills progress bars */
+        .skill-container {
+            margin-top: 20px;
+        }
+
+        .skill-item {
+            margin-bottom: 15px;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar-bg {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-purple), var(--accent-purple));
+            width: 0%; /* Animated via JavaScript */
+            border-radius: 6px;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* Image gallery with captions */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .gallery-item {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 120px;
+            background: #2a1b40;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .gallery-caption {
+            padding: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Styled footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 60px;
+            transition: background 0.3s, border-color 0.3s;
+        }
     </style>
-  </head>
-  <body>
-    <h1>Hi, I'm Joaquin!</h1>
- 
-    <h2>About Me</h2>
-    <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
- 
-    <h2>My Interests</h2>
-    <p>Music, Tennis, Drawing, Video Games</p>
- 
-    <h2>My Goals for This Course</h2>
-    <p>Build a sufficient portfolio</p>
- 
-    <h2>My GitHub</h2>
-    <p>Check out my projects: 
-      <a href="https://github.com/JoaquinT05">JoaquinT05</a>
-    </p>
-  </body>
-</html>
+</head>
+<body>
+
+    <!-- Styled navigation bar at the top -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">Joaquin.Dev</a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#interests">Interests</a>
+                <a href="#goals">Goals</a>
+                <a href="#github">GitHub</a>
+                <!-- Light / dark mode toggle button -->
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light Mode</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Animated welcome message -->
+        <header class="welcome-section">
+            <h1 class="welcome-title">Hi, I'm Joaquin!</h1>
+            <p>Welcome to my personal portfolio space.</p>
+        </header>
+
+        <!-- Card-style section: About Me -->
+        <section id="about" class="card">
+            <h2>About Me</h2>
+            <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
+            
+            <!-- Countdown timer to a future date (End of School Year/AP Exam) -->
+            <h3 style="color: var(--accent-purple); margin-top: 20px; font-size: 1rem;">Countdown to AP Exams / Summer:</h3>
+            <div class="timer-container">
+                <div class="timer-box"><div class="timer-num" id="days">00</div><div class="timer-label">Days</div></div>
+                <div class="timer-box"><div class="timer-num" id="hours">00</div><div class="timer-label">Hours</div></div>
