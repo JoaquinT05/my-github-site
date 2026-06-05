@@ -1,344 +1,358 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joaquin's Website</title>
-    <style>
-        /* Black and purple theme with CSS variables */
-        :root {
-            --bg-color: #0b0713;
-            --card-bg: #140e24;
-            --text-color: #f1ecfb;
-            --text-muted: #bda8df;
-            --primary-purple: #9d4edd;
-            --accent-purple: #c77dff;
-            --border-color: #3c2463;
-            --gradient-bg: linear-gradient(135deg, #0b0713 0%, #1a0f30 100%);
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joaquin's Website</title>
+  <style>
+    /* --- CSS VARIABLES (Black & Purple Theme) --- */
+    :root[data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #090214 0%, #180630 100%);
+      --card-bg: #1f0b3a;
+      --card-border: #4d1a94;
+      --text-main: #f3ecf9;
+      --text-muted: #c9b3e6;
+      --accent-purple: #9d4edd;
+      --accent-hover: #c77dff;
+      --nav-bg: rgba(15, 5, 28, 0.95);
+      --track-bg: #2d164d;
+    }
 
-        /* Light mode variables */
-        [data-theme="light"] {
-            --bg-color: #f5f0fa;
-            --card-bg: #ffffff;
-            --text-color: #1a0f30;
-            --text-muted: #5a4575;
-            --primary-purple: #7b2cbf;
-            --accent-purple: #9d4edd;
-            --border-color: #e0d4f0;
-            --gradient-bg: linear-gradient(135deg, #f5f0fa 0%, #e8daf8 100%);
-        }
+    :root[data-theme="light"] {
+      --bg-gradient: linear-gradient(135deg, #f3ecf9 0%, #e2d1f7 100%);
+      --card-bg: #ffffff;
+      --card-border: #d4bbf2;
+      --text-main: #180630;
+      --text-muted: #53416b;
+      --accent-purple: #7b2cbf;
+      --accent-hover: #9d4edd;
+      --nav-bg: rgba(243, 236, 249, 0.95);
+      --track-bg: #e2d1f7;
+    }
 
-        /* Smooth scroll navigation */
-        html {
-            scroll-behavior: smooth;
-        }
+    /* --- BASE STYLES & SMOOTH SCROLL --- */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 100px 20px 40px 20px;
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text-main);
+      transition: background 0.3s ease, color 0.3s ease;
+      line-height: 1.6;
+    }
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: var(--gradient-bg);
-            color: var(--text-color);
-            min-height: 100vh;
-            line-height: 1.6;
-            transition: background 0.3s, color 0.3s;
-        }
+    /* --- STYLED NAVIGATION BAR --- */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: var(--nav-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--card-border);
+      z-index: 1000;
+      padding: 10px 20px;
+      transition: background 0.3s, border-color 0.3s;
+    }
 
-        /* Styled navigation bar */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(20, 14, 36, 0.85);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            box-sizing: border-box;
-            transition: background 0.3s, border-color 0.3s;
-        }
-        [data-theme="light"] .navbar {
-            background: rgba(255, 255, 255, 0.85);
-        }
+    .nav-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .nav-container {
-            max-width: 1000px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-        }
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
 
-        .nav-logo {
-            font-weight: bold;
-            color: var(--primary-purple);
-            text-decoration: none;
-            font-size: 1.2rem;
-        }
+    .nav-links a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.2s;
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
+    .nav-links a:hover {
+      color: var(--accent-purple);
+    }
 
-        .nav-links a {
-            color: var(--text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
+    /* --- LIGHT/DARK MODE TOGGLE --- */
+    .theme-toggle {
+      background: var(--accent-purple);
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s, transform 0.1s;
+    }
 
-        .nav-links a:hover {
-            color: var(--accent-purple);
-        }
+    .theme-toggle:hover {
+      background: var(--accent-hover);
+      transform: scale(1.05);
+    }
 
-        /* Light/Dark mode toggle button */
-        .theme-toggle {
-            background: var(--primary-purple);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background 0.2s;
-        }
+    /* --- ANIMATED WELCOME MESSAGE --- */
+    .welcome-container {
+      text-align: center;
+      margin-bottom: 40px;
+    }
 
-        .theme-toggle:hover {
-            background: var(--accent-purple);
-        }
+    .welcome-title {
+      font-size: 3rem;
+      margin: 0;
+      background: linear-gradient(45deg, #e0aaff, var(--accent-purple), #c77dff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulseGlow 3s ease-in-out infinite alternate;
+    }
 
-        /* Main Content Layout */
-        .container {
-            max-width: 800px;
-            margin: 100px auto 40px auto;
-            padding: 0 20px;
-        }
+    @keyframes pulseGlow {
+      0% { filter: drop-shadow(0 0 2px rgba(157,78,221,0.2)); }
+      100% { filter: drop-shadow(0 0 12px rgba(157,78,221,0.6)); }
+    }
 
-        /* Animated welcome message */
-        .welcome-section {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    /* --- HOVER EFFECTS ON HEADINGS --- */
+    h2 {
+      color: var(--accent-purple);
+      border-bottom: 2px solid var(--card-border);
+      padding-bottom: 5px;
+      transition: color 0.3s, padding-left 0.3s, border-color 0.3s;
+      position: relative;
+    }
 
-        .welcome-title {
-            font-size: 2.5rem;
-            color: var(--primary-purple);
-            margin-bottom: 10px;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInDown 1s forwards;
-        }
+    h2:hover {
+      color: var(--accent-hover);
+      padding-left: 10px;
+      border-color: var(--accent-hover);
+    }
 
-        @keyframes fadeInDown {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* --- CARD-STYLE SECTIONS WITH BORDERS --- */
+    .card {
+      background: var(--card-bg);
+      border: 2px solid var(--card-border);
+      border-radius: 12px;
+      padding: 25px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: transform 0.3s, box-shadow 0.3s, background 0.3s, border-color 0.3s;
+      scroll-margin-top: 90px;
+    }
 
-        /* Card-style sections with borders */
-        .card {
-            background: var(--card-bg);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 30px;
-            scroll-margin-top: 90px; /* Offset for fixed navbar */
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.2s, box-shadow 0.2s, background 0.3s, border-color 0.3s;
-        }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(157, 78, 221, 0.2);
+    }
 
-        .card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(157, 78, 221, 0.15);
-        }
+    p {
+      color: var(--text-muted);
+      margin: 10px 0;
+    }
 
-        /* Hover effects on headings */
-        h2 {
-            color: var(--primary-purple);
-            display: inline-block;
-            margin-top: 0;
-            position: relative;
-            transition: color 0.3s;
-        }
+    a {
+      color: var(--accent-purple);
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
 
-        h2:hover {
-            color: var(--accent-purple);
-            cursor: pointer;
-        }
+    /* --- COUNTDOWN TIMER --- */
+    .countdown-display {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 15px;
+    }
 
-        h2::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            transform: scaleX(0);
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--accent-purple);
-            transform-origin: bottom right;
-            transition: transform 0.25s ease-out;
-        }
+    .time-box {
+      background: var(--track-bg);
+      border: 1px solid var(--card-border);
+      padding: 10px 15px;
+      border-radius: 8px;
+      min-width: 70px;
+      text-align: center;
+    }
 
-        h2:hover::after {
-            transform: scaleX(1);
-            transform-origin: bottom left;
-        }
+    .time-num {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent-purple);
+      display: block;
+    }
 
-        p {
-            color: var(--text-muted);
-        }
+    .time-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
 
-        a {
-            color: var(--accent-purple);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+    /* --- SKILLS PROGRESS BARS --- */
+    .skill-item {
+      margin-bottom: 15px;
+    }
 
-        /* Countdown timer setup */
-        .timer-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
 
-        .timer-box {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 8px;
-            min-width: 60px;
-            text-align: center;
-        }
+    .progress-track {
+      background: var(--track-bg);
+      border-radius: 10px;
+      height: 12px;
+      width: 100%;
+      overflow: hidden;
+    }
 
-        .timer-num {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-purple);
-        }
+    .progress-bar {
+      background: linear-gradient(90deg, var(--accent-purple), var(--accent-hover));
+      height: 100%;
+      width: 0;
+      border-radius: 10px;
+      transition: width 1.5s cubic-bezier(0.1, 0.8, 0.2, 1);
+    }
 
-        .timer-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
+    /* --- IMAGE GALLERY WITH CAPTIONS --- */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
 
-        /* Skills progress bars */
-        .skill-container {
-            margin-top: 20px;
-        }
+    .gallery-item {
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--card-border);
+      aspect-ratio: 1 / 1;
+      background: #111;
+    }
 
-        .skill-item {
-            margin-bottom: 15px;
-        }
+    .gallery-item svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
 
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 5px;
-            font-size: 0.9rem;
-        }
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(15, 5, 28, 0.85);
+      color: #fff;
+      padding: 8px;
+      font-size: 0.85rem;
+      text-align: center;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
 
-        .progress-bar-bg {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            height: 12px;
-            border-radius: 6px;
-            overflow: hidden;
-        }
+    .gallery-item:hover .gallery-caption {
+      transform: translateY(0);
+    }
 
-        .progress-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-purple), var(--accent-purple));
-            width: 0%; /* Animated via JavaScript */
-            border-radius: 6px;
-            transition: width 1.5s ease-in-out;
-        }
-
-        /* Image gallery with captions */
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .gallery-item {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        .gallery-img {
-            width: 100%;
-            height: 120px;
-            background: #2a1b40;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-        }
-
-        .gallery-caption {
-            padding: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            border-top: 1px solid var(--border-color);
-        }
-
-        /* Styled footer */
-        footer {
-            text-align: center;
-            padding: 30px 20px;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 60px;
-            transition: background 0.3s, border-color 0.3s;
-        }
-    </style>
+    /* --- STYLED FOOTER --- */
+    footer {
+      text-align: center;
+      margin-top: 5px;
+      padding: 20px;
+      border-top: 2px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- Styled navigation bar at the top -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">Joaquin.Dev</a>
-            <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#interests">Interests</a>
-                <a href="#goals">Goals</a>
-                <a href="#github">GitHub</a>
-                <!-- Light / dark mode toggle button -->
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">Light Mode</button>
-            </div>
-        </div>
-    </nav>
+  <!-- NAVIGATION BAR -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#interests">Interests</a>
+        <a href="#goals">Goals</a>
+        <a href="#countdown">Countdown</a>
+        <a href="#github">GitHub</a>
+      </div>
+      <button class="theme-toggle" id="themeToggleBtn" onclick="toggleTheme()">Light Mode</button>
+    </div>
+  </nav>
 
-    <div class="container">
-        <!-- Animated welcome message -->
-        <header class="welcome-section">
-            <h1 class="welcome-title">Hi, I'm Joaquin!</h1>
-            <p>Welcome to my personal portfolio space.</p>
-        </header>
+  <!-- WELCOME HEADER -->
+  <div class="welcome-container">
+    <h1 class="welcome-title">Hi, I'm Joaquin!</h1>
+  </div>
 
-        <!-- Card-style section: About Me -->
-        <section id="about" class="card">
-            <h2>About Me</h2>
-            <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
-            
-            <!-- Countdown timer to a future date (End of School Year/AP Exam) -->
-            <h3 style="color: var(--accent-purple); margin-top: 20px; font-size: 1rem;">Countdown to AP Exams / Summer:</h3>
-            <div class="timer-container">
-                <div class="timer-box"><div class="timer-num" id="days">00</div><div class="timer-label">Days</div></div>
-                <div class="timer-box"><div class="timer-num" id="hours">00</div><div class="timer-label">Hours</div></div>
+  <!-- ABOUT ME CARD -->
+  <section id="about" class="card">
+    <h2>About Me</h2>
+    <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
+  </section>
+
+  <!-- INTERESTS & SKILLS CARD -->
+  <section id="interests" class="card">
+    <h2>My Interests</h2>
+    <p>Music, Tennis, Drawing, Video Games</p>
+    
+    <div style="margin-top: 25px;">
+      <div class="skill-item">
+        <div class="skill-info"><span>AP Computer Science Principles</span><span>75%</span></div>
+        <div class="progress-track"><div class="progress-bar" data-progress="75%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-info"><span>Tennis Control &amp; Agility</span><span>85%</span></div>
+        <div class="progress-track"><div class="progress-bar" data-progress="85%"></div></div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-info"><span>Digital Illustration &amp; Drawing</span><span>60%</span></div>
+        <div class="progress-track"><div class="progress-bar" data-progress="60%"></div></div>
+      </div>
+    </div>
+
+    <!-- IMAGE GALLERY -->
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <svg viewBox="0 0 100 100" fill="#3a0ca3"><rect width="100" height="100"/><circle cx="50" cy="50" r="25" fill="#f72585"/><path d="M30 70 Q 50 30 70 70" stroke="#4cc9f0" stroke-width="4" fill="none"/></svg>
+        <div class="gallery-caption">Digital Drawing Art</div>
+      </div>
+      <div class="gallery-item">
+        <svg viewBox="0 0 100 100" fill="#7209b7"><rect width="100" height="100"/><circle cx="50" cy="50" r="30" fill="#ccff00"/><line x1="20" y1="20" x2="80" y2="80" stroke="#7209b7" stroke-width="3"/></svg>
+        <div class="gallery-caption">Tennis Court Vibes</div>
+      </div>
+      <div class="gallery-item">
+        <svg viewBox="0 0 100 100" fill="#150030"><rect width="100" height="100"/><rect x="25" y="35" width="50" height="30" rx="5" fill="#480ca8"/><circle cx="37" cy="50" r="4" fill="#ff007f"/><circle cx="63" cy="50" r="4" fill="#00f0ff"/></svg>
+        <div class="gallery-caption">Video Game Design</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOALS CARD -->
+  <section id="goals" class="card">
+    <h2>My Goals for This Course</h2>
+    <p>Build a sufficient portfolio</p>
+  </section>
+
+  <!-- APCSP COUNTDOWN CARD -->
+  <section id="countdown" class="card">
+    <h2>APCSP 2027 Examination Countdown</h2>
+    <p>Time remaining until the May 2027 AP Computer Science Principles Exam administration:</p>
+    <div class="countdown-display">
+      <div class="time-box"><span class="time-num" id="days">00</span><span class="time-label">Days</span></div>
