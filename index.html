@@ -8,6 +8,9 @@
       /* Setup color themes using CSS variables */
       :root {
         --bg-color: #f5f5f5;
+        --card-bg: #ffffff;
+        --card-border: #e0e0e0;
+        --card-shadow: rgba(0, 0, 0, 0.05);
         --text-color: #333333;
         --h1-color: #400865;
         --h2-color: #400865;
@@ -19,10 +22,13 @@
       /* Dark mode color variations */
       [data-theme="dark"] {
         --bg-color: #121212;
+        --card-bg: #1e1e1e;
+        --card-border: #333333;
+        --card-shadow: rgba(0, 0, 0, 0.3);
         --text-color: #e0e0e0;
         --h1-color: #821ce9;
         --h2-color: #821ce9;
-        --link-color: #0066cc;
+        --link-color: #4da3ff; /* Increased contrast for readability */
         --btn-bg: #333333;
         --btn-text: #ffffff;
       }
@@ -38,10 +44,27 @@
         transition: background 0.3s, color 0.3s; /* Smooth color switching */
       }
       
-      h1 { color: var(--h1-color); }
-      h2 { color: var(--h2-color); border-bottom: 2px solid var(--h2-color); }
-      p  { line-height: 1.6; }
-      a  { color: var(--link-color); }
+      h1 { color: var(--h1-color); margin-top: 10px; }
+      h2 { color: var(--h2-color); border-bottom: 2px solid var(--h2-color); margin-top: 0; padding-bottom: 8px; }
+      p  { line-height: 1.6; margin-bottom: 0; }
+      a  { color: var(--link-color); text-decoration: none; font-weight: bold; }
+      a:hover { text-decoration: underline; }
+
+      /* Card layout design styling */
+      .card-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--card-border);
+        border-radius: 8px;
+        padding: 24px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px var(--card-shadow);
+        transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+      }
+
+      /* Custom margin spacing specifically for project list items */
+      .project-item {
+        margin-top: 12px;
+      }
 
       /* Styling for the toggle button */
       .theme-toggle-btn {
@@ -64,20 +87,31 @@
 
     <h1>Hi, I'm Joaquin!</h1>
  
-    <h2>About Me</h2>
-    <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
+    <!-- About Me Card -->
+    <div class="card-section">
+      <h2>About Me</h2>
+      <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
+    </div>
  
-    <h2>My Interests</h2>
-    <p>Music, Tennis, Drawing, Video Games</p>
+    <!-- Interests Card -->
+    <div class="card-section">
+      <h2>My Interests</h2>
+      <p>Music, Tennis, Drawing, Video Games</p>
+    </div>
  
-    <h2>My Goals for This Course</h2>
-    <p>Build a sufficient portfolio</p>
+    <!-- Goals Card -->
+    <div class="card-section">
+      <h2>My Goals for This Course</h2>
+      <p>Build a sufficient portfolio</p>
+    </div>
  
-    <h2>My GitHub</h2>
-    <p>Check out my projects:
-      <p>My Profile: <a href="https://github.com/JoaquinT05">JoaquinT05</a></p>
-      <p>Create PT Task: <a href="https://studio.code.org/projects/applab/ebc0a634-f072-4f79-ae20-046e0e5c94e8">Rolling Stones Top 500 Album Rankings</a></p>
-    </p>
+    <!-- GitHub & Projects Card -->
+    <div class="card-section">
+      <h2>My GitHub</h2>
+      <p>Check out my projects:</p>
+      <p class="project-item">My Profile: <a href="https://github.com/JoaquinT05" target="_blank">JoaquinT05</a></p>
+      <p class="project-item">Create PT Task: <a href="https://studio.code.org/projects/applab/ebc0a634-f072-4f79-ae20-046e0e5c94e8" target="_blank">Rolling Stones Top 500 Album Rankings</a></p>
+    </div>
 
     <!-- JavaScript to control the toggle function -->
     <script>
