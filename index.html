@@ -1,136 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Joaquin's Website</title>
-    <style>
-      /* Setup color themes using CSS variables */
-      :root {
-        --bg-color: #f5f5f5;
-        --card-bg: #ffffff;
-        --card-border: #e0e0e0;
-        --card-shadow: rgba(0, 0, 0, 0.05);
-        --text-color: #333333;
-        --h1-color: #400865;
-        --h2-color: #400865;
-        --link-color: #0066cc;
-        --btn-bg: #e0e0e0;
-        --btn-text: #333333;
+<!-- Animated Welcome Section -->
+<div class="welcome-wrap">
+  <p class="welcome-greeting">Welcome to my site</p>
+  <h1 class="welcome-name">Hi, I'm Joaquin! 👋</h1>
+  <p class="welcome-typewriter"><span id="typed"></span><span class="cursor"></span></p>
+  <div class="welcome-dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+</div>
+
+<style>
+  .welcome-wrap {
+    background: linear-gradient(135deg, #400865 0%, #6a0dad 100%);
+    border-radius: 8px;
+    padding: 36px 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .welcome-wrap::before {
+    content: '';
+    position: absolute;
+    top: -40px; left: -40px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    pointer-events: none;
+  }
+  .welcome-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: -50px; right: -30px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    pointer-events: none;
+  }
+  .welcome-greeting {
+    font-size: 13px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c084fc;
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: fadeSlideIn 0.6s ease forwards 0.2s;
+    margin-bottom: 10px;
+  }
+  .welcome-name {
+    font-size: 2.4rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 12px;
+    opacity: 0;
+    transform: translateY(12px);
+    animation: fadeSlideIn 0.7s ease forwards 0.5s;
+  }
+  .welcome-typewriter {
+    font-size: 1.05rem;
+    color: #e9d5ff;
+    min-height: 1.6em;
+    opacity: 0;
+    animation: fadeSlideIn 0.6s ease forwards 0.9s;
+  }
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: #c084fc;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink 0.75s step-end infinite;
+  }
+  .welcome-dots {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeSlideIn 0.5s ease forwards 1.1s;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #c084fc;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .dot:nth-child(2) { animation-delay: 0.2s; background: #a855f7; }
+  .dot:nth-child(3) { animation-delay: 0.4s; background: #7c3aed; }
+  @keyframes fadeSlideIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.4); opacity: 1; }
+  }
+</style>
+
+<script>
+  const phrases = [
+    "11th grader. Coder. Creator.",
+    "Into music, tennis & video games.",
+    "Building my portfolio one project at a time.",
+    "Check out my GitHub below!"
+  ];
+  let pIndex = 0, cIndex = 0, deleting = false;
+  const el = document.getElementById('typed');
+  function type() {
+    const current = phrases[pIndex];
+    if (!deleting) {
+      el.textContent = current.slice(0, ++cIndex);
+      if (cIndex === current.length) {
+        setTimeout(() => { deleting = true; type(); }, 1800);
+        return;
       }
-
-      /* Dark mode color variations */
-      [data-theme="dark"] {
-        --bg-color: #121212;
-        --card-bg: #1e1e1e;
-        --card-border: #333333;
-        --card-shadow: rgba(0, 0, 0, 0.3);
-        --text-color: #e0e0e0;
-        --h1-color: #821ce9;
-        --h2-color: #821ce9;
-        --link-color: #4da3ff; /* Increased contrast for readability */
-        --btn-bg: #333333;
-        --btn-text: #ffffff;
+    } else {
+      el.textContent = current.slice(0, --cIndex);
+      if (cIndex === 0) {
+        deleting = false;
+        pIndex = (pIndex + 1) % phrases.length;
       }
-
-      /* Layout styles using the variables */
-      body { 
-        font-family: Arial, sans-serif; 
-        max-width: 800px;
-        margin: 0 auto; 
-        padding: 20px; 
-        background: var(--bg-color); 
-        color: var(--text-color);
-        transition: background 0.3s, color 0.3s; /* Smooth color switching */
-      }
-      
-      h1 { color: var(--h1-color); margin-top: 10px; }
-      h2 { color: var(--h2-color); border-bottom: 2px solid var(--h2-color); margin-top: 0; padding-bottom: 8px; }
-      p  { line-height: 1.6; margin-bottom: 0; }
-      a  { color: var(--link-color); text-decoration: none; font-weight: bold; }
-      a:hover { text-decoration: underline; }
-
-      /* Card layout design styling */
-      .card-section {
-        background-color: var(--card-bg);
-        border: 1px solid var(--card-border);
-        border-radius: 8px;
-        padding: 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px var(--card-shadow);
-        transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-      }
-
-      /* Custom margin spacing specifically for project list items */
-      .project-item {
-        margin-top: 12px;
-      }
-
-      /* Styling for the toggle button */
-      .theme-toggle-btn {
-        padding: 8px 16px;
-        font-size: 14px;
-        font-weight: bold;
-        cursor: pointer;
-        border: none;
-        border-radius: 5px;
-        background-color: var(--btn-bg);
-        color: var(--btn-text);
-        float: right; /* Positions button at the top right */
-        transition: background-color 0.3s, color 0.3s;
-      }
-    </style>
-  </head>
-  <body>
-    <!-- Toggle Button -->
-    <button class="theme-toggle-btn" id="themeToggle">Dark Mode</button>
-
-    <h1>Hi, I'm Joaquin!</h1>
- 
-    <!-- About Me Card -->
-    <div class="card-section">
-      <h2>About Me</h2>
-      <p>I'm an 11th grade student taking APCSP. I'm looking to expand my coding knowledge and build a portfolio.</p>
-    </div>
- 
-    <!-- Interests Card -->
-    <div class="card-section">
-      <h2>My Interests</h2>
-      <p>Music, Tennis, Drawing, Video Games</p>
-    </div>
- 
-    <!-- Goals Card -->
-    <div class="card-section">
-      <h2>My Goals for This Course</h2>
-      <p>Build a sufficient portfolio</p>
-    </div>
- 
-    <!-- GitHub & Projects Card -->
-    <div class="card-section">
-      <h2>My GitHub</h2>
-      <p>Check out my projects:</p>
-      <p class="project-item">My Profile: <a href="https://github.com/JoaquinT05" target="_blank">JoaquinT05</a></p>
-      <p class="project-item">Create PT Task: <a href="https://studio.code.org/projects/applab/ebc0a634-f072-4f79-ae20-046e0e5c94e8" target="_blank">Rolling Stones Top 500 Album Rankings</a></p>
-    </div>
-
-    <!-- JavaScript to control the toggle function -->
-    <script>
-      const toggleButton = document.getElementById('themeToggle');
-      
-      toggleButton.addEventListener('click', () => {
-        // Check current theme state
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        
-        if (currentTheme === 'dark') {
-          // Switch to light mode
-          document.documentElement.removeAttribute('data-theme');
-          toggleButton.textContent = 'Dark Mode';
-        } else {
-          // Switch to dark mode
-          document.documentElement.setAttribute('data-theme', 'dark');
-          toggleButton.textContent = 'Light Mode';
-        }
-      });
-    </script>
-  </body>
-</html>
+    }
+    setTimeout(type, deleting ? 40 : 70);
+  }
+  setTimeout(type, 1400);
+</script>
